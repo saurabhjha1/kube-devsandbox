@@ -1,8 +1,22 @@
-* install vagrant and dependecies
-`./requirements_ubuntu.sh`
+### install vagrant and dependecies
+```
+./requirements_ubuntu.sh
+```
 
-* create virtual machines using vagrant
-`vagrant up`
+### create virtual machines using vagrant and install kubernetes
+```
+vagrant up
+```
 
-* install monitoring tools
-`post-init.sh`
+### get the config file
+
+```
+./get_config.sh
+
+mv config ~/.kube/config
+```
+
+### install monitoring tools
+```
+post-init.sh
+```
