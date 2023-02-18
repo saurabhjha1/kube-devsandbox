@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: load-generator
+  namespace: bookinfo
+spec:
+  containers:
+  - name: elasticdump
+    image: saurabhjha1/wrk2
+    command:
+      - sleep
+      - "10000000"
+    imagePullPolicy: IfNotPresent
+  restartPolicy: Always
+  tolerations:
+  - key: node-role.kubernetes.io/master
+    effect: NoSchedule
