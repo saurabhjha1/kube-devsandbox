@@ -40,8 +40,8 @@ then
 	kubectl apply -f bookinfo.yaml
 	kubectl apply -f bookinfo-ratings-v2.yaml
 	kubectl apply -f bookinfo-db.yaml
+	kubectl apply -f load-generator.yaml
 	kubectl apply -f $APP_DIR/networking/destination-rule-all.yaml
-	kubectl apply -f bookinfo-load-generator.yaml
 
 	read -p "wait for pods to get deployed. First use may take several minutes. press enter to continue"
 

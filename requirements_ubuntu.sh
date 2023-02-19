@@ -1,6 +1,3 @@
-sudo apt install -y vagrant virtualbox ansible
+sudo snap install kubectl helm --classic
 sudo apt-get install ruby-dev
-vagrant plugin install landrush 
-vagrant plugin install vagrant-vboxmanager 
-vargrant plugin install vagrant-vbguest
-vagrant plugin install vagrant-libvirt
+sudo apt install jq libssl-dev aiohttp

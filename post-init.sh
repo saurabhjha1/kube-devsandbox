@@ -1,11 +1,8 @@
 #!/bin/bash
 
-nodes=$(vagrant global-status | grep k8s | awk '{ print $2 }')
-for node in $nodes; do
-    vagrant ssh $node -c "sudo  sysctl -w vm.max_map_count=262144"
-    vagrant ssh $node -c "echo 'sysctl vm.max_map_count=262144' | sudo tee -a /etc/rc.local"
-    vagrant ssh $node -c "echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf"
-done
+sudo  sysctl -w vm.max_map_count=262144
+echo 'sysctl vm.max_map_count=262144' | sudo tee -a /etc/rc.local
+echo 'vm.max_map_count=262144' | sudo tee -a /etc/sysctl.conf
 
 # install local-path-storage from rancher to mount local folder in kubernetes
 kubectl apply -f manifests/local-path-storage.yaml
@@ -55,11 +52,6 @@ helm install prometheus-stack prometheus-community/kube-prometheus-stack --value
 read -p "check manually if prometheus is running, then press enter to continue"
 ## kubectl --namespace observability get pods -l "release=prometheus-stack"
 
-# install jaeger
-kubectl apply -f ./manifests/monitoring/jaeger_es.yml
-
-read -p "check manually if jaeger is running, then press enter to continue"
-
 # install istio
 kubectl create namespace istio-system
 helm install istio-base istio/base --namespace istio-system --create-namespace --wait
@@ -70,6 +62,12 @@ helm install istio-ingress istio/gateway -n istio-ingress --wait
 helm install istio-egress istio/egressgateway -n istio-system --wait
 kubectl get deployments -n istio-system --output wide
 kubectl -n istio-system apply -f ./manifests/monitoring/kiali.yml
+
+# install jaeger
+kubectl apply -f ./manifests/monitoring/jaeger_es.yml
+
+read -p "check manually if jaeger is running, then press enter to continue"
+
 
 read -p "check manually if istio is running, then press enter to continue"
 
